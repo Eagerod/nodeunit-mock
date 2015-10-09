@@ -9,6 +9,11 @@ var app = {
     },
     argumentFunction: function(arg1, arg2) {
         return arg1 + arg2;
+    },
+    asyncFunction: function(callback) {
+        setTimeout(function () {
+            callback("callback, yo!");
+        }, 0);
     }
 };
 
@@ -69,6 +74,35 @@ module.exports = {
             test.equal(af.callCount, 1);
             test.deepEqual(af.callArguments, [[1, 2]]);
             test.done();
+        }
+    },
+    "Async function": {
+        "Mock pass through": function(test) {
+            test.expect(3);
+            var af = mock(test, app, "asyncFunction");
+            function callback(value) {
+                test.equal(value, "callback, yo!");
+                test.done();
+            }
+            app.asyncFunction(callback);
+            test.equal(af.callCount, 1);
+            test.deepEqual(af.callArguments, [[callback]]);
+        },
+        "Mock alternate callback arg": function(test) {
+            test.expect(3);
+            function replacementFunction(callback) {
+                setTimeout(function() {
+                    callback("yo, callback!");
+                }, 0);
+            }
+            var af = mock(test, app, "asyncFunction", replacementFunction);
+            function cb(value) {
+                test.equal(value, "yo, callback!");
+                test.done();
+            }
+            app.asyncFunction(cb);
+            test.equal(af.callCount, 1);
+            test.deepEqual(af.callArguments, [[cb]]);
         }
     }
 };
