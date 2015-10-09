@@ -4,6 +4,9 @@ var mock = require("..");
 
 // This is my test application.
 var app = {
+    propertyFunction: function(arg) {
+        return arg;
+    },
     regularFunction: function() {
         return 1;
     },
@@ -21,6 +24,21 @@ var app = {
 };
 
 module.exports = {
+    "Properties": {
+        "Call values": function(test) {
+            var nOps = 25;
+            test.expect(nOps + 2);
+            var args = [];
+            var pf = mock(test, app, "propertyFunction");
+            for ( var i = 0; i < nOps; ++i ) {
+                test.equal(app.propertyFunction(i), i);
+                args.push([i]);
+            }
+            test.equal(pf.callCount, nOps);
+            test.deepEqual(pf.callArguments, args);
+            test.done();
+        }
+    },
     "Regular function": {
         "Mock pass through": function(test) {
             test.expect(3);
