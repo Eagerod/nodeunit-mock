@@ -14,6 +14,9 @@ var app = {
         setTimeout(function () {
             callback("callback, yo!");
         }, 0);
+    },
+    throwsFunction: function() {
+        throw new Error("Uh oh!");
     }
 };
 
@@ -103,6 +106,37 @@ module.exports = {
             app.asyncFunction(cb);
             test.equal(af.callCount, 1);
             test.deepEqual(af.callArguments, [[cb]]);
+        }
+    },
+    "Throws function": {
+        "Mock pass through": function(test) {
+            test.expect(3);
+            var af = mock(test, app, "throwsFunction");
+            test.throws(function() {
+                app.throwsFunction();
+            });
+            test.equal(af.callCount, 1);
+            test.deepEqual(af.callArguments, [[]]);
+            test.done();
+        },
+        "Mock alternate return": function(test) {
+            test.expect(3);
+            function replacementFunction() {
+                // I don't throw!
+            }
+            var af = mock(test, app, "throwsFunction", replacementFunction);
+            test.equal(app.throwsFunction(), undefined);
+            test.equal(af.callCount, 1);
+            test.deepEqual(af.callArguments, [[]]);
+            test.done();
+        },
+        "Mock no function call": function(test) {
+            test.expect(3);
+            var af = mock(test, app, "throwsFunction", null);
+            test.equal(app.throwsFunction(), undefined);
+            test.equal(af.callCount, 1);
+            test.deepEqual(af.callArguments, [[]]);
+            test.done();
         }
     }
 };
