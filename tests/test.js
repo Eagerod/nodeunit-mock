@@ -37,6 +37,17 @@ module.exports = {
             test.equal(pf.callCount, nOps);
             test.deepEqual(pf.callArguments, args);
             test.done();
+        },
+        "Unmocked function unaffected": function(test) {
+            test.expect(4);
+            var pf = mock(test, app, "propertyFunction", function(arg) {
+                return arg * 2;
+            });
+            test.equal(app.propertyFunction(4), 8);
+            test.equal(app.unmocked_propertyFunction(4), 4);
+            test.equal(pf.callCount, 1);
+            test.deepEqual(pf.callArguments, [[4]]);
+            test.done();
         }
     },
     "Regular function": {
