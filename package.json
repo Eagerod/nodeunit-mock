@@ -1,0 +1,33 @@
+{
+    "name": "nodeunit-mock",
+    "description": "A helper to allow you to mock out methods in a single nodeunit test without affecting the rest of the tests.",
+    "version": "0.0.1",
+    "private": true,
+    "keywords": [
+        "nodeunit",
+        "testing",
+        "mock"
+    ],
+    "repository": { 
+        "type": "git",
+        "url": "https://github.com/Eagerod/nodeunit-mock.git"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+        "jsdoc": "3.3.2",
+        "eslint": "0.24.1",
+        "nodeunit": "0.9.1",
+        "istanbul": "0.3.17"
+    },
+    "author": {
+        "name": "Aleem Haji",
+        "author": "hajial@gmail.com"
+    },
+    "scripts": {
+        "test": "./node_modules/.bin/nodeunit tests/test.js",
+        "docs": "./node_modules/.bin/jsdoc --recurse ./lib -d docs",
+        "lint": "./node_modules/.bin/eslint .",
+        "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/nodeunit tests/test.js"
+    }
+}
