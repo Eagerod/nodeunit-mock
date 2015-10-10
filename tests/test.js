@@ -167,5 +167,18 @@ module.exports = {
             test.deepEqual(af.callArguments, [[]]);
             test.done();
         }
+    },
+    "Nested mocks": function(test) {
+        test.expect(1);
+        mock(test, app, "asyncFunction", function(cb) {
+            cb(app.regularFunction());
+        });
+        mock(test, app, "regularFunction", function() {
+            return 2;
+        });
+        app.asyncFunction(function(val) {
+            test.equal(val, 2);
+            test.done();
+        });
     }
 };
