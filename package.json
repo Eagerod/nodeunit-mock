@@ -1,7 +1,7 @@
 {
     "name": "nodeunit-mock",
     "description": "A helper to allow you to mock out methods in a single nodeunit test without affecting the rest of the tests.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "keywords": [
         "nodeunit",
         "testing",
