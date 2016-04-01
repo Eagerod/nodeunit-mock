@@ -44,4 +44,4 @@ PropertyTests["Throws Non-Existent Function"] = function(test) {
         });
     });
     test.done();
-}
+};
