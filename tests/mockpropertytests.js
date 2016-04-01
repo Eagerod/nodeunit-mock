@@ -35,3 +35,13 @@ PropertyTests["Unmocked Function"] = function(test) {
     test.deepEqual(pf.callArguments, [[4]]);
     test.done();
 };
+
+PropertyTests["Throws Non-Existent Function"] = function(test) {
+    test.expect(1);
+    test.throws(function() {
+        mock(test, testObject, "nonexistentFunction", function(arg) {
+            return arg * 2;
+        });
+    });
+    test.done();
+}
